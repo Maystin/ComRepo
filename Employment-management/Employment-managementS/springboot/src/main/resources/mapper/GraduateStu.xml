@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.GraduateStuMapper"><!--namespace里面是mapper的接口-->
+
+    <insert id="save">
+        insert into graduatestu(name, gyear, sex, university, phone,department, major, number)
+        values(#{name}, #{gyear}, #{sex}, #{university}, #{phone}, #{department}, #{major},#{number})
+    </insert>
+    <update id="updateById">
+        update graduatestu set name = #{name}, gyear = #{gyear}, sex = #{sex}, university = #{university},
+        phone = #{phone}, department = #{department}, major = #{major}, number = #{number},updatetime = #{updatetime}
+        where id = #{id}
+    </update>
+    <delete id="deleteById">
+        delete from graduatestu where id = #{id}
+    </delete>
+
+    <select id="list" resultType="com.example.springboot.entity.GraduateStu">
+        select * from graduatestu order by id desc
+    </select>
+
+    <select id="listByCondition" resultType="com.example.springboot.entity.GraduateStu">
+        select * from graduatestu
+            <where>
+                <if test="name != null and name != ''">
+                    name like concat('%',#{ name },'%')
+                </if>
+                <if test="number != null and number != ''">
+                    and number like concat('%',#{ number },'%')
+                </if>
+            </where>
+        order by id desc
+
+    </select>
+    <select id="getById" resultType="com.example.springboot.entity.GraduateStu">
+        select * from graduatestu where id = #{id}
+    </select>
+</mapper>
